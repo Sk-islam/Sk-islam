@@ -2,20 +2,22 @@ name: Generate Snake
 
 on:
   schedule:
-    - cron: "0 0 * * *" # Every day at midnight
-  workflow_dispatch:
+    - cron: "0 0 * * *"  # every day at midnight
+  workflow_dispatch:      # allow manual trigger
 
 jobs:
   generate:
     runs-on: ubuntu-latest
     steps:
       - name: Generate GitHub Contribution Snake
-        uses: Platane/snk@master
+        uses: Platane/snk@v3
         with:
           github_user_name: Sk-islam
-          svg_out_path: dist/github-contribution-grid-snake.svg
+          outputs: |
+            dist/github-contribution-grid-snake.svg
+            dist/github-contribution-grid-snake-dark.svg?palette=github-dark
 
-      - name: Push Snake
+      - name: Push to GitHub Pages
         uses: crazy-max/ghaction-github-pages@v3.1.0
         with:
           target_branch: output
